@@ -104,5 +104,59 @@ namespace UniversidadWeb.Controllers
         {
             return _context.Estudiante.Any(e => e.EstudianteId == id);
         }
+
+        public class Parametros
+        {
+            public int Inicial { get; set; }
+            public int Final { get; set; }
+        }
+        public class Respuesta
+        {
+            public int aleatorio { get; set; }
+        }
+
+        public class RespuestaLetra
+        {
+            public char letraAleatoria { get; set; }
+        }
+
+
+        [HttpGet]
+        [Route("Random")]
+        public Respuesta Aleatorio()
+        {
+            Respuesta respuesta = new Respuesta();
+            Random numeroAleatorio = new Random();
+            respuesta.aleatorio = numeroAleatorio.Next(0, 101);
+            return respuesta;
+        }
+
+        [HttpPost]
+        [Route("Randomconparametros")]
+        public Respuesta AleatoriotConRago([FromBody] Parametros numeros)
+        {
+
+            Respuesta respuesta = new Respuesta();
+            Random r = new Random();
+            respuesta.aleatorio = (r.Next(numeros.Inicial, (numeros.Final + 1)));
+
+            return respuesta;
+        }
+
+        [HttpGet]
+        [Route("Randomletras")]
+        public RespuestaLetra letra()
+        {
+            RespuestaLetra respuesta = new RespuestaLetra();
+            Random r = new Random();
+            int numero = r.Next(26);
+            char letraGenerada = (char)(((int)'A') + numero);
+            respuesta.letraAleatoria = letraGenerada;
+            return respuesta;
+        }
+
+
+
+
     }
 }
